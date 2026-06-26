@@ -1,13 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=https://fitness-diary-app-three.vercel.app">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ONE MORE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0A0A0A;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Стеклянное модальное окно */
+    .modal {
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 32px 28px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal h2 {
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .modal p {
+      color: #AAAAAA;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal .highlight {
+      color: #22C55E;
+      font-weight: 500;
+    }
+
+    .modal .vpn-tip {
+      background: rgba(34, 197, 94, 0.08);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 16px 0 24px;
+      border-left: 3px solid #22C55E;
+      text-align: left;
+    }
+
+    .modal .vpn-tip p {
+      margin-bottom: 0;
+      font-size: 14px;
+      color: #CCCCCC;
+    }
+
+    .modal .vpn-tip .emoji {
+      font-size: 18px;
+    }
+
+    /* Кнопка "Перейти в приложение" */
+    .btn-go {
+      background: #22C55E;
+      color: #000000;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);
+      letter-spacing: 0.01em;
+    }
+
+    .btn-go:hover {
+      transform: scale(1.02);
+      background: #1fb854;
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-go:active {
+      transform: scale(0.98);
+    }
+
+    /* Лёгкая пульсация для кнопки */
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25); }
+      50% { box-shadow: 0 8px 32px rgba(34, 197, 94, 0.45); }
+      100% { box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25); }
+    }
+
+    .btn-go {
+      animation: pulse-glow 2s infinite ease-in-out;
+    }
+
+    /* Фоновые декоративные элементы (как в оригинале) */
+    .bg-blur {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bg-blur-1 {
+      width: 300px;
+      height: 300px;
+      background: #22C55E;
+      top: -100px;
+      left: -100px;
+    }
+
+    .bg-blur-2 {
+      width: 400px;
+      height: 400px;
+      background: #22C55E;
+      bottom: -150px;
+      right: -150px;
+      opacity: 0.15;
+    }
+
+    /* Адаптация под тёмную тему */
+    @media (prefers-color-scheme: dark) {
+      body { background: #0A0A0A; }
+      .modal { background: rgba(20, 20, 20, 0.8); }
+    }
+
+    /* Для светлой темы (на случай, если пользователь включил) */
+    @media (prefers-color-scheme: light) {
+      body { background: #F5F5F5; }
+      .modal { background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(0,0,0,0.05); }
+      .modal h2 { color: #111111; }
+      .modal p { color: #555555; }
+      .modal .vpn-tip { background: rgba(34, 197, 94, 0.1); border-left-color: #22C55E; }
+      .modal .vpn-tip p { color: #333333; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Декоративные фоновые элементы -->
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+
+  <!-- Модальное окно -->
+  <div class="modal" role="dialog" aria-labelledby="modal-title">
+    <h2 id="modal-title">🤫 Наш сервер сейчас отдыхает за границей</h2>
+    <p>
+      Приложение <strong>ONE MORE</strong> временно работает на бесплатном зарубежном сервере.<br>
+      Из-за этого скорость загрузки может быть ниже обычной.
+    </p>
+
+    <div class="vpn-tip">
+      <p>
+        <span class="emoji">🌍</span> 
+        <strong>Для быстрой и стабильной работы</strong> рекомендуем включить <span class="highlight">VPN</span>.
+      </p>
+    </div>
+
+    <p style="font-size: 14px; color: #888; margin-bottom: 20px;">
+      Спасибо за терпение — мы уже работаем над переездом в Россию! 🇷🇺
+    </p>
+
+    <!-- Кнопка перехода в приложение -->
+    <button class="btn-go" onclick="goToApp()">
+      🚀 Перейти в приложение
+    </button>
+  </div>
+
   <script>
-    window.location.href = "https://fitness-diary-app-three.vercel.app";
+    function goToApp() {
+      // Это ссылка на твой реальный сайт (замени, если нужно)
+      window.location.href = "https://fitness-diary-app-three.vercel.app";
+    }
+
+    // Автоматический переход через 3 секунды (опционально)
+    // setTimeout(goToApp, 3000);
+
+    // Для отладки в мобильном браузере (если нужно)
+    console.log('ONE MORE — Редирект с предупреждением');
   </script>
+
 </body>
 </html>
